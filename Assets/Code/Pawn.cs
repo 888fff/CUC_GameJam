@@ -9,6 +9,8 @@ public class Pawn : MonoBehaviour
     public float Speed = 1; // m per second
     public Chessboard Board;
     public Vector2Int DestGridPos;
+    public Vector2Int WalkDir;
+    public bool Walking = false;
     TweenCallback TCB;
     //
     public static Vector2Int[] DIR_ARRAY = {
@@ -34,22 +36,50 @@ public class Pawn : MonoBehaviour
     {
         return Board.WorldToGrid(transform.position);
     }
+    public bool IsWalking()
+    {
+        return Walking;
+    }
     //
+    public bool WalkStep(Vector2Int dir)
+    {
+        if (Walking) return false;
+        var gp = GetGridPos();
+        var dest = gp + dir;
+        if (!Board.IsGridPosLegal(dest))
+        {
+            return false;
+        }
+        WalkTo(dest);
+        return true;
+    }
     public void WalkTo(Vector2Int gridPos)
     {
+        if (Walking || Speed == 0) return;
         var wp = Board.GridToWorld(gridPos);
         var dur = Vector3.Distance(wp,transform.position) / Speed;
+        WalkDir = gridPos - GetGridPos();
         DestGridPos = gridPos;
-        StartWalk();
         transform.DOMove(wp, dur).OnComplete(()=>_EndWalk());
+        _StartWalk();
+    }
+    private void _StartWalk()
+    {
+        Walking = true;
+        //
+        StartWalk();
+    }
+    private void _EndWalk()
+    {
+        //WalkDir = Vector2Int.zero;
+        Walking = false;
+        //
+        EndWalk();
     }
     public virtual void StartWalk()
     {
         Debug.Log("Pawn StartWalk");
-    }
-    private void _EndWalk()
-    {
-        EndWalk();
+        Walking = true;
     }
     public virtual void EndWalk()
     {
@@ -112,7 +142,7 @@ public class Pawn : MonoBehaviour
         }
         //left and right cross sight line
         var cdir = new Vector2Int(dir.y,dir.x);
-        for (var i = - SightLength; i > -1 ;++i)
+        for (var i = - 1; i >= -SightLength ;--i)
         {
             var dp = gp + cdir * i;
             if (dp.x < 0 || dp.x >= Board.Col || dp.y < 0 || dp.y >= Board.Row) break;
@@ -132,7 +162,7 @@ public class Pawn : MonoBehaviour
                 }
             }
         }
-        for (var i = 1; i > SightLength; ++i)
+        for (var i = 1; i <= SightLength; ++i)
         {
             var dp = gp + cdir * i;
             if (dp.x < 0 || dp.x >= Board.Col || dp.y < 0 || dp.y >= Board.Row) break;

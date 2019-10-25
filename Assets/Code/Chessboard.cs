@@ -5,6 +5,14 @@ using UnityEngine;
 /*
   
 */
+public class GridType
+{
+    public const int WALKABLE = 0;
+    public const int UNWALKABLE = 1;
+    public const int TRAP = 2;
+    public const int TRAP_USED = 3;
+    public const int DEST = 9;
+}
 public class Chessboard : MonoBehaviour
 {
     public Transform BasePole;
@@ -55,7 +63,7 @@ public class Chessboard : MonoBehaviour
                 var gt = GetGridType(gp);
                 switch (gt)
                 {
-                    case 1:
+                    case GridType.UNWALKABLE:
                         {
                             var trans = MapObject.transform.GetChild((gp.y) * Col + gp.x);
                             if (trans)
@@ -95,13 +103,18 @@ public class Chessboard : MonoBehaviour
     //---------------------------------
     public int GetGridType(Vector2Int gp)
     {
-        if (gp.x < 0 || gp.y < 0 || gp.x >= Col || gp.y >= Row) return -1;
+        if (!IsGridPosLegal(gp)) return -1;
         return BoardData[gp.y * Col + gp.x];
     }
     // No Bounding check!
     private int gridToIdx(Vector2Int gp)
     {
         return gp.y * Col + gp.x;
+    }
+    public bool IsGridPosLegal(Vector2Int gp)
+    {
+        if (gp.x < 0 || gp.y < 0 || gp.x >= Col || gp.y >= Row) return false;
+        return true;
     }
 
 
