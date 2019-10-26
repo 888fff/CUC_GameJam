@@ -46,7 +46,7 @@ public class Game : MonoBehaviour
 
     public void __TestCreatePawn()
     {
-        var go = GameObject.Instantiate(Resources.Load("Player")) as GameObject;
+        /*var go = GameObject.Instantiate(Resources.Load("Player")) as GameObject;
         go.GetComponent<MeshRenderer>().material.color = Color.blue;
         player = go.GetComponent<Player>();
         cb.RegisterPawn(player);
@@ -55,9 +55,18 @@ public class Game : MonoBehaviour
         go = GameObject.Instantiate(Resources.Load("Item")) as GameObject;
         item = go.GetComponent<Item>();
         cb.RegisterPawn(item);
-        item.SetToGrid(new Vector2Int(3,3));
+        item.SetToGrid(new Vector2Int(3,3));*/
         //
+        var go = GameObject.Instantiate(Resources.Load("Wolf")) as GameObject;
+        go.GetComponent<MeshRenderer>().material.color = Color.red;
+        player = go.GetComponent<Wolf>();
+        cb.RegisterPawn(player);
+        //player.SetToGrid(Vector2Int.zero);
 
+        go = GameObject.Instantiate(Resources.Load("Item")) as GameObject;
+        item = go.GetComponent<Item>();
+        cb.RegisterPawn(item);
+        item.SetToGrid(new Vector2Int(3, 3));
     }
 
     public void __TestPlayerWalk()
