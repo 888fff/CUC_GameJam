@@ -73,7 +73,7 @@ public class Pawn : MonoBehaviour
     {
         //WalkDir = Vector2Int.zero;
         Walking = false;
-        //
+        //Invoke("EndWalk",0);
         EndWalk();
     }
     public virtual void StartWalk()

@@ -21,6 +21,8 @@ public class Chessboard : MonoBehaviour
     public int GridSize = 1;
     public List<int> BoardData; //Data
     public List<Pawn> PawnList;
+    //there is a raw data
+    public BoardMap MapData;
     //---
     public GameObject MapObject;
 
@@ -40,16 +42,34 @@ public class Chessboard : MonoBehaviour
     public void LoadMap(int level)
     {
         Type t = Type.GetType("Map_" + level);
-        var mapData = System.Activator.CreateInstance(t) as BoardMap;
-        MapObject = Instantiate(Resources.Load(mapData.MapPrefabName)) as GameObject;
+        MapData = System.Activator.CreateInstance(t) as BoardMap;
+        MapObject = Instantiate(Resources.Load(MapData.MapPrefabName)) as GameObject;
         MapObject.transform.parent = BasePole;
         MapObject.transform.localPosition = Vector3.zero;
-        BoardData = new List<int>(mapData.Data);
+        BoardData = new List<int>(MapData.Data);
         if (Col * Row != BoardData.Count)
         {
             Debug.LogError("Error Board Num");
         }
         FinishLoadMap();
+    }
+    public void ResetMap()
+    {
+        //remove scene gameobject
+        if(MapObject != null) Destroy(MapObject);
+        //remove all board data
+        if(BoardData!= null) BoardData.Clear();
+        //remove pawns
+        if(PawnList != null)
+        {
+            for (var i = 0; i < PawnList.Count; ++i)
+            {
+                Destroy(PawnList[i].gameObject);
+            }
+            PawnList.Clear();
+        }
+        //clear mapdata
+        MapData = null;
     }
     public void FinishLoadMap()
     {
@@ -115,6 +135,17 @@ public class Chessboard : MonoBehaviour
     {
         if (gp.x < 0 || gp.y < 0 || gp.x >= Col || gp.y >= Row) return false;
         return true;
+    }
+    public bool IsOccupation(Vector2Int gp)
+    {
+        for (var i = PawnList.Count - 1; i >= 0 ; i--)
+        {
+            if(PawnList[i].GetGridPos() == gp)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 
