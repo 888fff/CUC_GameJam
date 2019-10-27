@@ -74,6 +74,7 @@ public class Chessboard : MonoBehaviour
     public void FinishLoadMap()
     {
         //TEST CODE
+        /*
         var gp = Vector2Int.zero;
         for (var i = 0;i<Col;++i)
         {
@@ -95,6 +96,7 @@ public class Chessboard : MonoBehaviour
                 }
             }
         }
+        */
     }
     //// HELPER Function
     public Vector3 GridToWorld(Vector2Int gp)
