@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de26470ac7b1224788d247caf7fae5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SightLength: 1
+  SightLength: 5
   Speed: 1
   Board: {fileID: 0}
   DestGridPos: {x: 0, y: 0}
@@ -269,6 +269,8 @@ MonoBehaviour:
   afraidInit: 0
   destination: {x: 0, y: 0}
   curPosition: {x: 0, y: 0}
+  anim: {fileID: 0}
+  isDead: 0
 --- !u!54 &5502749751758507792
 Rigidbody:
   m_ObjectHideFlags: 0

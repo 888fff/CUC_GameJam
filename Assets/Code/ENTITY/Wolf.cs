@@ -164,7 +164,7 @@ public class Wolf : Pawn
                 int targetX = curPosition.x + targetDir.x;
                 int targetY = curPosition.y + targetDir.y;
                 //为了更直观,被惊吓则变为蓝色;
-                GetComponent<MeshRenderer>().material.color = Color.blue;
+                //GetComponent<MeshRenderer>().material.color = Color.blue;
                 Speed = 0.3f;
 
                 if (targetX < 0 || targetX >= Board.Col || targetY < 0 || targetY >= Board.Row)//!!!!此处需修改边界值;
@@ -215,7 +215,7 @@ public class Wolf : Pawn
                 if (curPosition == destination)
                 {
                     //在受惊吓状态,但已到达目的地,则恢复红色,并开始巡逻;
-                    GetComponent<MeshRenderer>().material.color = Color.red;
+                    //GetComponent<MeshRenderer>().material.color = Color.red;
                     Speed = 1.2f;
                     state = WolfState.patrol;
                     afraidInit = false;

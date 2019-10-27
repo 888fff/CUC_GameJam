@@ -197,6 +197,7 @@ public class Dog : Pawn
 
     public void DestroySelf()
     {
+        GameManager.GetInstance().MissionFailed();
         Destroy(this.gameObject);
     }
 

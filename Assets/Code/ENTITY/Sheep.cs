@@ -153,6 +153,7 @@ public class Sheep : Pawn
 
     public void DestroySelf()
     {
+        GameManager.GetInstance().MissionFailed();
         Destroy(this.gameObject);
     }
 
