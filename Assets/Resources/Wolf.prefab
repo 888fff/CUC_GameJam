@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 4646902845196036008}
   - component: {fileID: 4646902845193221804}
   m_Layer: 9
-  m_Name: "\u72FC"
+  m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

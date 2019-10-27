@@ -10,7 +10,7 @@ public class Wolf : Pawn
 
     public Vector2Int destination;
     public Vector2Int curPosition;
-
+    public SkinnedMeshRenderer SMR;
     public Animator anim;
     public bool isDead;
     void Start()
@@ -24,6 +24,9 @@ public class Wolf : Pawn
 
         anim = GetComponent<Animator>();
         isDead = false;
+
+        SMR = transform.Find("Wolf").GetComponent<SkinnedMeshRenderer>();
+
     }
 
     void Update()
@@ -156,6 +159,7 @@ public class Wolf : Pawn
         if (state == WolfState.afraid)
         {
             //Walking = false;
+            SMR.material.color = Color.blue;
             if (!afraidInit)
             {
                 curPosition = GetGridPos();
@@ -219,6 +223,8 @@ public class Wolf : Pawn
                     Speed = 1.2f;
                     state = WolfState.patrol;
                     afraidInit = false;
+                    SMR.material.color = Color.white;
+
                 }
             }
         }

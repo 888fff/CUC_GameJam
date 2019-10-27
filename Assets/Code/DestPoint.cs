@@ -18,9 +18,6 @@ public class DestPoint : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<Sheep>())
-        {
-            GameManager.GetInstance().MissionComplete();
-        }
+
     }
 }

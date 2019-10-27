@@ -258,7 +258,7 @@ public class Pawn : MonoBehaviour
             if (dp.x < 0 || dp.x >= Board.Col || dp.y < 0 || dp.y >= Board.Row) break;
             else
             {
-                if (Board.GetGridType(dp) != 0) break;
+                if (Board.GetGridType(dp) != 0&&Board.GetGridType(dp)!=9) break;
                 else
                 {
                     for (var j = 0; j < Board.PawnList.Count; ++j)
@@ -303,7 +303,7 @@ public class Pawn : MonoBehaviour
             if (dp.x < 0 || dp.x >= Board.Col || dp.y < 0 || dp.y >= Board.Row) break;
             else
             {
-                if (Board.GetGridType(dp) != 0) break;
+                if (Board.GetGridType(dp) != 0 && Board.GetGridType(dp) != 9) break;
                 else
                 {
                     for (var j = 0; j < Board.PawnList.Count; ++j)
@@ -351,7 +351,7 @@ public class Pawn : MonoBehaviour
             if (dp.x < 0 || dp.x >= Board.Col || dp.y < 0 || dp.y >= Board.Row) break;
             else
             {
-                if (Board.GetGridType(dp) != 0) break;
+                if (Board.GetGridType(dp) != 0 && Board.GetGridType(dp) != 9) break;
                 else
                 {
                     for (var j = 0; j < Board.PawnList.Count; ++j)
@@ -398,7 +398,7 @@ public class Pawn : MonoBehaviour
             if (dp.x < 0 || dp.x >= Board.Col || dp.y < 0 || dp.y >= Board.Row) break;
             else
             {
-                if (Board.GetGridType(dp) != 0) break;
+                if (Board.GetGridType(dp) != 0 && Board.GetGridType(dp) != 9) break;
                 else
                 {
                     for (var j = 0; j < Board.PawnList.Count; ++j)

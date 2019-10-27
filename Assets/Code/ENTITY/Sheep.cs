@@ -229,6 +229,11 @@ public class Sheep : Pawn
             Invoke("DestroySelf", 3f);
             //Destroy(this.gameObject);
         }
+
+        if (other.gameObject.GetComponent<DestPoint>() != null)
+        {
+            GameManager.GetInstance().MissionComplete();
+        }
     }
 
     public void DestroySelf()
