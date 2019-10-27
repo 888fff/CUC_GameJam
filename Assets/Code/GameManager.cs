@@ -31,6 +31,12 @@ public class GameManager : MonoBehaviour
     public Button Lose_Cancel_Btn;
     public Button Win_OK_Btn;
     public Button Win_Cancel_Btn;
+    public Button Exit_Btn;
+    public Image Grass_Img;
+    public Image Fruit_Img;
+    public Image Bark_Img;
+
+
     //
     public bool LockController;
     //
@@ -88,7 +94,11 @@ public class GameManager : MonoBehaviour
 
                     Win_Cancel_Btn = WinUI.Find("CANCEL").GetComponent<Button>();
                     Win_Cancel_Btn.onClick.AddListener(BackToMenu);
-
+                    //-
+                    var GameUI = obj.transform.Find("GAME_UI");
+                    Grass_Img = GameUI.Find("ITEM_1/ITEM_1_CD").GetComponent<Image>();
+                    Fruit_Img = GameUI.Find("ITEM_2/ITEM_2_CD").GetComponent<Image>();
+                    Bark_Img = GameUI.Find("ITEM_3/ITEM_3_CD").GetComponent<Image>();
 
                 }
             }
@@ -98,14 +108,14 @@ public class GameManager : MonoBehaviour
         if (scene.name == "MenuScene" && scene.isLoaded)
         {
             var objs = scene.GetRootGameObjects();
-
+            /*
             foreach (var obj in objs)
             {
                 if (obj.name == "Canvas")
                 {
                    obj.transform.Find("START").GetComponent<Button>().onClick.AddListener(StartGame);
                 }
-            }
+            }*/
 
              SetState(MENU_STATE);
 
@@ -119,6 +129,28 @@ public class GameManager : MonoBehaviour
             CurStage++;
             CBorad.ResetMap();
             CBorad.LoadMap(CurStage);
+            //create pawn!
+            {
+                GameObject go = null;
+                var data = CBorad.MapData;
+                go = GameObject.Instantiate(Resources.Load("Sheep")) as GameObject;
+                var sheep = go.GetComponent<Sheep>();
+                CBorad.RegisterPawn(sheep);
+                sheep.SetToGrid(data.SheepPos);
+                go = GameObject.Instantiate(Resources.Load("Dog")) as GameObject;
+                var dog = go.GetComponent<Dog>();
+                CBorad.RegisterPawn(dog);
+                dog.SetToGrid(data.DogPos);
+                for (var i = data.WolfPosAndDir.Length - 1;i>=0;--i)
+                {
+                    go = GameObject.Instantiate(Resources.Load("Wolf")) as GameObject;
+                    var wolf = go.GetComponent<Wolf>();
+                    CBorad.RegisterPawn(wolf);
+                    wolf.SetToGrid(data.WolfPosAndDir[i].Pos);
+                    wolf.WalkDir.Set(data.WolfPosAndDir[i].Dir.x, data.WolfPosAndDir[i].Dir.y);
+                }
+                
+            }
             //UI 
             //clear end UI
             WinUI.gameObject.SetActive(false);
@@ -178,7 +210,10 @@ public class GameManager : MonoBehaviour
         {
             case MENU_STATE:
                 {
-
+                    if (Input.anyKeyDown)
+                    {
+                        StartGame();
+                    }
                 }
                 break;
             case GAME_STATE:

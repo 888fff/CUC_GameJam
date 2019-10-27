@@ -15,7 +15,7 @@ public class Map_2 : BoardMap
         };
         SheepPos = new Vector2Int(1,1);
         DogPos = new Vector2Int(0,0);
-        WolfPos = new WolfInitData[2] {
+        WolfPosAndDir = new WolfInitData[2] {
            new WolfInitData(2,2,1,0),
            new WolfInitData(3,3,0,1),
         };

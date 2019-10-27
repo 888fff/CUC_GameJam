@@ -18,7 +18,7 @@ public class BoardMap
     public int[] Data;
     public Vector2Int SheepPos;
     public Vector2Int DogPos;
-    public WolfInitData[] WolfPos;
+    public WolfInitData[] WolfPosAndDir;
 
     //
     public BoardMap()
