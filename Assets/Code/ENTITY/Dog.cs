@@ -46,7 +46,7 @@ public class Dog : Pawn
             }
             else
             {
-                if (Board.GetGridType(targetIndex) == 0)
+                if (Board.GetGridType(targetIndex) == 0 || Board.GetGridType(targetIndex) == 9)
                 {
                     WalkStep(new Vector2Int(0, 1));
                 }
@@ -61,7 +61,7 @@ public class Dog : Pawn
             }
             else
             {
-                if (Board.GetGridType(targetIndex) == 0)
+                if (Board.GetGridType(targetIndex) == 0 || Board.GetGridType(targetIndex) == 9)
                 {
                     WalkStep(new Vector2Int(0, -1));
                 }
@@ -76,7 +76,7 @@ public class Dog : Pawn
             }
             else
             {
-                if (Board.GetGridType(targetIndex) == 0)
+                if (Board.GetGridType(targetIndex) == 0 || Board.GetGridType(targetIndex) == 9)
                 {
                     WalkStep(new Vector2Int(-1, 0));
                 }
@@ -91,7 +91,7 @@ public class Dog : Pawn
             }
             else
             {
-                if (Board.GetGridType(targetIndex) == 0)
+                if (Board.GetGridType(targetIndex) == 0 || Board.GetGridType(targetIndex) == 9)
                 {
                     WalkStep(new Vector2Int(1, 0));
                 }
