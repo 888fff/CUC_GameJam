@@ -12,6 +12,8 @@ public class Sheep : Pawn
 
     public Animator anim;
     public bool isDead;
+    public bool findFood=false;
+    public bool startRunToFood = false;
     private void Start()
     {
         state = SheepState.idle;
@@ -23,6 +25,7 @@ public class Sheep : Pawn
 
         anim = GetComponent<Animator>();
         isDead = false;
+        //findFood = true;
     }
 
     private void Update()
@@ -35,9 +38,84 @@ public class Sheep : Pawn
     {
         if (state == SheepState.dead)
             return;
+        //New Struct
+        /*if(!startRunToFood)
+        {
+            Vector2Int foodPos = Vector2Int.zero;
+            Vector2Int moveDir = Vector2Int.zero;
+            var pawn = DetectFood(WalkDir, ref foodPos, ref moveDir);
+            if (pawn != null)
+            {
+                Food f = pawn.transform.gameObject.GetComponent<Food>();
+                if (f != null)
+                {
+                    Debug.Log("Find it 1!");
+
+                    //向食物移动;
+                    Speed = f.speed;
+                    //WalkTo(foodPos);
+                    WalkStep(moveDir);
+                    //Debug.Log("Food:" + foodPos.ToString());
+                    state = SheepState.chaseFood;
+                    findFood = true;
+                    startRunToFood = true;
+                }
+            }
+        }*/
+        Vector2Int foodPos = Vector2Int.zero;
+        Vector2Int moveDir = Vector2Int.zero;
+        var pawn = DetectFood(WalkDir, ref foodPos, ref moveDir);
+        if (pawn != null)
+        {
+            Food f = pawn.transform.gameObject.GetComponent<Food>();
+            if (f != null)
+            {
+                Debug.Log("Find it 1!");
+
+                //向食物移动;
+                Speed = f.speed;
+                //WalkTo(foodPos);
+                WalkStep(moveDir);
+                state = SheepState.chaseFood;
+                findFood = true;
+            }
+            else
+            {
+                findFood = false;
+            }
+        }
+        else
+        {
+            if(!findFood)
+            {
+                t += Time.deltaTime;
+                if (t > randomWalkTimeRate)
+                {
+                    t = 0;
+                    //符合时间间隔;
+
+
+                    //如果没有检测到食物,随机判定是否要行走;
+                    int rate = Random.Range(0, 100);
+                    if (rate <= randomWalkRate)//在随机行走范围内，则再进行一次随机来判定向哪个方向行走;
+                    {
+                        Vector2Int randomMoveDir = FindRandomDir();
+                        WalkStep(randomMoveDir);
+                        state = SheepState.walk;
+                    }
+                    else
+                    {
+                        //否则就呆在原地;
+                        //Do Nothing
+                        state = SheepState.idle;
+                    }
+                }
+            }        
+        }
+
 
         //检测是否有食物;
-        Vector2Int foodPos = Vector2Int.zero;
+        /*Vector2Int foodPos = Vector2Int.zero;
         Vector2Int moveDir = Vector2Int.zero;
         var pawn = DetectFood(WalkDir, ref foodPos,ref moveDir);
         if(pawn!=null)
@@ -45,6 +123,7 @@ public class Sheep : Pawn
             Food f = pawn.transform.gameObject.GetComponent<Food>();
             if(f!=null)
             {
+
                 //向食物移动;
                 Speed = f.speed;
                 //WalkTo(foodPos);
@@ -76,7 +155,7 @@ public class Sheep : Pawn
                     state = SheepState.idle;
                 }
             }
-        }
+        }*/
     } 
     
     //返回一个有效随机运动方向;
@@ -145,6 +224,7 @@ public class Sheep : Pawn
             wolf.state = WolfState.attack;//当攻击动画播放完毕,Wolf恢复巡逻状态;
             isDead = true;
             anim.SetTrigger("die");
+            state = SheepState.dead;
 
             Invoke("DestroySelf", 3f);
             //Destroy(this.gameObject);
@@ -165,6 +245,54 @@ public class Sheep : Pawn
     public override void EndWalk()
     {
         anim.SetTrigger("idle");
+
+        //New Struct
+        /*if(startRunToFood)
+        {
+            Vector2Int foodPos = Vector2Int.zero;
+            Vector2Int moveDir = Vector2Int.zero;
+            var pawn = DetectFood(WalkDir, ref foodPos, ref moveDir);
+            if (pawn != null)
+            {
+                Debug.Log("Find it 2!");
+                findFood = true;
+
+                Food f = pawn.transform.gameObject.GetComponent<Food>();
+                Speed = f.speed;
+                WalkStep(moveDir);
+                //WalkTo(foodPos);
+                state = SheepState.chaseFood;
+                startRunToFood = false;
+            }
+            else
+            {
+                //findFood = false;
+                Speed = 0.3f;
+                startRunToFood = false;
+            }
+        }*/
+
+        //是否检测到食物;
+        /*Vector2Int foodPos = Vector2Int.zero;
+        Vector2Int moveDir = Vector2Int.zero;
+        var pawn = DetectFood(WalkDir, ref foodPos, ref moveDir);
+        if (pawn != null)
+        {
+            Debug.Log("Find it 2!");
+            findFood = true;
+
+            Food f = pawn.transform.gameObject.GetComponent<Food>();
+            Speed = f.speed;
+            //WalkStep(moveDir);
+            //WalkTo(foodPos);
+            state = SheepState.chaseFood;
+        }
+        else
+        {
+            //findFood = false;
+            Speed = 0.3f;
+        }*/
+
     }
 
     public void ControlRotation(Vector2Int walkDir)

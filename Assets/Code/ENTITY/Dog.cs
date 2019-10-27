@@ -20,6 +20,8 @@ public class Dog : Pawn
     public Animator anim;
     public bool isDead;
 
+    public bool readyPutDownGrass=true;
+
     private void Start()
     {
         barkRange = 4;
@@ -99,11 +101,15 @@ public class Dog : Pawn
     //放置Grass或Fruit;
     void PutDownFood()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J)&&readyPutDownGrass)
         {
+            //readyPutDownGrass = true;
+
             //如果还没有放置Grass,则允许放置一个Grass;
             if (!hasPutDownGrass)
             {
+                //readyPutDownGrass = true;
+
                 hasPutDownGrass = true;
                 Vector2Int putDownPosition = GetGridPos();
 
@@ -114,6 +120,8 @@ public class Dog : Pawn
                 Board.RegisterPawn(item);
                 item.SetToGrid(putDownPosition);
                 item.dog = this;
+                readyPutDownGrass = false;
+                Debug.Log("FoodPos:" + putDownPosition.ToString());
             }
             else
             {
@@ -175,9 +183,9 @@ public class Dog : Pawn
     {
         ControlRotation(WalkDir);
 
-        WalkControl();
-
         PutDownFood();
+
+        WalkControl();
 
         BarkControl();
     }
@@ -204,11 +212,36 @@ public class Dog : Pawn
     public override void StartWalk()
     {
         anim.SetTrigger("run");
+        readyPutDownGrass = false;
     }
 
     public override void EndWalk()
     {
         anim.SetTrigger("idle");
+        readyPutDownGrass = true;
+
+        /*if(readyPutDownGrass)
+        {
+            if (!hasPutDownGrass)
+            {
+                hasPutDownGrass = true;
+                Vector2Int putDownPosition = GetGridPos();
+
+                //放置一个Grass(实例化一个Grass)
+                var go = GameObject.Instantiate(Resources.Load("Grass")) as GameObject;
+                go.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
+                Food item = go.GetComponent<Food>();
+                Board.RegisterPawn(item);
+                item.SetToGrid(putDownPosition);
+                item.dog = this;
+            }
+            else
+            {
+                Debug.Log("Already put down a grass!");
+            }
+
+            readyPutDownGrass = false;
+        }*/
     }
 
     public void ControlRotation(Vector2Int walkDir)

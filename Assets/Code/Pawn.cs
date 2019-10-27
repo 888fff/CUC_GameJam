@@ -143,9 +143,18 @@ public class Pawn : MonoBehaviour
                                 //return Board.PawnList[j];
                                 retVal = Board.PawnList[j];
                             }*/
-                            destGridPos.Set(dp.x,dp.y);
-                            moveDir = dir;
-                            return Board.PawnList[j];
+                            Sheep sheep = Board.PawnList[j].transform.gameObject.GetComponent<Sheep>();
+                            if (sheep!=null)
+                            {
+                                destGridPos.Set(dp.x, dp.y);
+                                moveDir = dir;
+                                return Board.PawnList[j];
+
+                            }
+                            //OLD###################################################
+                            //destGridPos.Set(dp.x,dp.y);
+                            //moveDir = dir;
+                            //return Board.PawnList[j];
                         }
                     }
                 }
@@ -175,9 +184,17 @@ public class Pawn : MonoBehaviour
                                 //return Board.PawnList[j];
                                 retVal = Board.PawnList[j];
                             }*/
-                            destGridPos.Set(dp.x, dp.y);
-                            moveDir = cdir * -1;
-                            return Board.PawnList[j];
+                            Sheep sheep = Board.PawnList[j].transform.gameObject.GetComponent<Sheep>();
+                            if(sheep!=null)
+                            {
+                                destGridPos.Set(dp.x, dp.y);
+                                moveDir = cdir * -1;
+                                return Board.PawnList[j];
+                            }
+                            //OLD####################################################
+                            //destGridPos.Set(dp.x, dp.y);
+                            //moveDir = cdir * -1;
+                            //return Board.PawnList[j];
                         }
                     }
                 }
@@ -205,9 +222,17 @@ public class Pawn : MonoBehaviour
                                 //return Board.PawnList[j];
                                 //retVal = Board.PawnList[j];
                             }*/
-                            destGridPos.Set(dp.x, dp.y);
-                            moveDir = cdir;
-                            return Board.PawnList[j];
+                            Sheep sheep = Board.PawnList[j].transform.gameObject.GetComponent<Sheep>();
+                            if(sheep!=null)
+                            {
+                                destGridPos.Set(dp.x, dp.y);
+                                moveDir = cdir;
+                                return Board.PawnList[j];
+                            }
+                            //OLD######################################
+                            //destGridPos.Set(dp.x, dp.y);
+                            //moveDir = cdir;
+                            //return Board.PawnList[j];
                         }
                     }
                 }
@@ -223,6 +248,8 @@ public class Pawn : MonoBehaviour
         Vector2Int foodPos = Vector2Int.zero;
 
         var gp = GetGridPos();
+        //Debug.Log("gp" + gp.ToString());
+        //Debug.Log("dir" + dir.ToString());
 
         //search for dir line except self
         for (var i = 1; i <= SightLength; ++i)
@@ -245,6 +272,7 @@ public class Pawn : MonoBehaviour
                                 {
                                     retVal = Board.PawnList[j];
                                     foodPos = new Vector2Int(dp.x, dp.y);
+                                    Debug.Log(" 前Food:" + foodPos.ToString());
                                     moveDir = dir;
                                 }
                                 else
@@ -253,6 +281,7 @@ public class Pawn : MonoBehaviour
                                     {
                                         retVal= Board.PawnList[j];
                                         foodPos = new Vector2Int(dp.x, dp.y);
+                                        Debug.Log(" 前1Food:" + foodPos.ToString());
                                         moveDir = dir;
                                     }
                                     else
@@ -288,6 +317,7 @@ public class Pawn : MonoBehaviour
                                 {
                                     retVal = Board.PawnList[j];
                                     foodPos = new Vector2Int(dp.x, dp.y);
+                                    Debug.Log(" 后Food:" + foodPos.ToString());
                                     moveDir = dir* -1;
                                 }
                                 else
@@ -296,6 +326,7 @@ public class Pawn : MonoBehaviour
                                     {
                                         retVal = Board.PawnList[j];
                                         foodPos = new Vector2Int(dp.x, dp.y);
+                                        Debug.Log(" 后1Food:" + foodPos.ToString());
                                         moveDir = dir * -1;
                                     }
                                     else
@@ -313,9 +344,10 @@ public class Pawn : MonoBehaviour
 
         //left and right cross sight line
         var cdir = new Vector2Int(dir.y, dir.x);
+        //Debug.Log("cdir" + cdir.ToString());
         for (var i = -1; i >= -SightLength; --i)
         {
-            var dp = gp + cdir * i;
+            var dp = gp + cdir * i;       
             if (dp.x < 0 || dp.x >= Board.Col || dp.y < 0 || dp.y >= Board.Row) break;
             else
             {
@@ -327,12 +359,16 @@ public class Pawn : MonoBehaviour
                         if (Board.PawnList[j].GetGridPos() == dp)
                         {
                             Food food = Board.PawnList[j].transform.gameObject.GetComponent<Food>();
+                            var ttt = Board.PawnList[j].GetGridPos();
                             if (food != null)
                             {
                                 if (retVal == null)
                                 {
                                     retVal = Board.PawnList[j];
                                     foodPos = new Vector2Int(dp.x, dp.y);
+                                    Debug.Log("Food wp:" + food.transform.position.ToString());
+                                    Debug.Log("gp:" + gp.ToString());
+                                    Debug.Log("dp:" + dp.ToString());
                                     moveDir = cdir * -1;
                                 }
                                 else
@@ -341,6 +377,7 @@ public class Pawn : MonoBehaviour
                                     {
                                         retVal = Board.PawnList[j];
                                         foodPos = new Vector2Int(dp.x, dp.y);
+                                        Debug.Log(" 右1Food:" + foodPos.ToString());
                                         moveDir = cdir * -1;
                                     }
                                     else
@@ -375,6 +412,7 @@ public class Pawn : MonoBehaviour
                                 {
                                     retVal = Board.PawnList[j];
                                     foodPos = new Vector2Int(dp.x, dp.y);
+                                    Debug.Log(" 左Food:" + foodPos.ToString());
                                     moveDir = cdir;
                                 }
                                 else
@@ -383,6 +421,7 @@ public class Pawn : MonoBehaviour
                                     {
                                         retVal = Board.PawnList[j];
                                         foodPos = new Vector2Int(dp.x, dp.y);
+                                        Debug.Log(" 左1Food:" + foodPos.ToString());
                                         moveDir = cdir;
                                     }
                                     else

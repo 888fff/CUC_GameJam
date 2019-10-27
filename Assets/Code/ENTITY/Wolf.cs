@@ -117,7 +117,7 @@ public class Wolf : Pawn
         curPosition = GetGridPos();
         int targetX = curPosition.x+WalkDir.x;
         int targetY = curPosition.y+WalkDir.y;
-        int mapIndex = targetY * 5 + targetX;//即将移动位置的总索引值;
+        int mapIndex = targetY * Board.Col + targetX;//5 + targetX;//即将移动位置的总索引值;
 
         //即将移动位置是否越界,越界则反弹;
         if(targetX<0||targetX>= Board.Col || targetY<0||targetY>= Board.Row)//!!!!此处需修改边界值;
@@ -155,7 +155,7 @@ public class Wolf : Pawn
 
         if (state == WolfState.afraid)
         {
-            Walking = false;
+            //Walking = false;
             if (!afraidInit)
             {
                 curPosition = GetGridPos();
@@ -192,7 +192,7 @@ public class Wolf : Pawn
                 }
                 else
                 {
-                    int mapIndex = targetY * 5 + targetX;//即将移动位置的总索引值;
+                    int mapIndex = targetY * Board.Col + targetX;//5 + targetX;//即将移动位置的总索引值;
                     targetPos = curPosition + targetDir;
 
 
