@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.802
+  m_FillAmount: 0
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1185,7 +1185,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.24
+  m_FillAmount: 0
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1333,7 +1333,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.587
+  m_FillAmount: 0
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

@@ -10,7 +10,7 @@ public class LogoScene : MonoBehaviour
     void Start()
     {
         //label.transform.DOShakePosition(20, new Vector3(10, 10, 0));
-        Invoke("Goto_Game",1.5f);
+        Invoke("Goto_Game",4f);
     }
 
     // Update is called once per frame

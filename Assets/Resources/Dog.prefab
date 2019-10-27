@@ -593,7 +593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SightLength: 1
-  Speed: 1
+  Speed: 2
   Board: {fileID: 0}
   DestGridPos: {x: 0, y: 0}
   WalkDir: {x: 0, y: 0}
@@ -607,6 +607,8 @@ MonoBehaviour:
   barkRate: 0
   CD_percentage: 0
   barkT: 0
+  anim: {fileID: 0}
+  isDead: 0
 --- !u!54 &7188988795246622648
 Rigidbody:
   m_ObjectHideFlags: 0
