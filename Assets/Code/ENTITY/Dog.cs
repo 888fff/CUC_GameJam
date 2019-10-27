@@ -16,6 +16,10 @@ public class Dog : Pawn
     public int CD_percentage;//CD百分比值(转圈程度,100即可释放技能);
     public float barkT;//吼叫计时器;
 
+    //动画相关;
+    public Animator anim;
+    public bool isDead;
+
     private void Start()
     {
         barkRange = 4;
@@ -23,6 +27,9 @@ public class Dog : Pawn
         barkT = 0;
         barkRate = 0.1f;
         canBark = true;
+
+        anim = GetComponent<Animator>();
+        isDead = false;
     }
 
     //按键控制移动;
@@ -30,19 +37,63 @@ public class Dog : Pawn
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            WalkStep(new Vector2Int(0, 1));
+            Vector2Int targetIndex = GetGridPos() + new Vector2Int(0, 1);
+            if (targetIndex.x < 0 || targetIndex.y < 0 || targetIndex.x >= Board.Col || targetIndex.y >= Board.Row)
+            {              
+                //无法移动
+            }
+            else
+            {
+                if (Board.GetGridType(targetIndex) == 0)
+                {
+                    WalkStep(new Vector2Int(0, 1));
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            WalkStep(new Vector2Int(0, -1));
+            Vector2Int targetIndex = GetGridPos() + new Vector2Int(0, -1);
+            if (targetIndex.x < 0 || targetIndex.y < 0 || targetIndex.x >= Board.Col || targetIndex.y >= Board.Row)
+            {
+                //无法移动
+            }
+            else
+            {
+                if (Board.GetGridType(targetIndex) == 0)
+                {
+                    WalkStep(new Vector2Int(0, -1));
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            WalkStep(new Vector2Int(-1, 0));
+            Vector2Int targetIndex = GetGridPos() + new Vector2Int(-1, 0);
+            if (targetIndex.x < 0 || targetIndex.y < 0 || targetIndex.x >= Board.Col || targetIndex.y >= Board.Row)
+            {
+                //无法移动
+            }
+            else
+            {
+                if (Board.GetGridType(targetIndex) == 0)
+                {
+                    WalkStep(new Vector2Int(-1, 0));
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            WalkStep(new Vector2Int(1, 0));
+            Vector2Int targetIndex = GetGridPos() + new Vector2Int(1, 0);
+            if (targetIndex.x < 0 || targetIndex.y < 0 || targetIndex.x >= Board.Col || targetIndex.y >= Board.Row)
+            {
+                //无法移动
+            }
+            else
+            {
+                if (Board.GetGridType(targetIndex) == 0)
+                {
+                    WalkStep(new Vector2Int(1, 0));
+                }
+            }
         }
     }
     //放置Grass或Fruit;
@@ -122,6 +173,8 @@ public class Dog : Pawn
 
     private void Update()
     {
+        ControlRotation(WalkDir);
+
         WalkControl();
 
         PutDownFood();
@@ -135,7 +188,52 @@ public class Dog : Pawn
         if (wolf != null)
         {
             wolf.state = WolfState.attack;//当攻击动画播放完毕,Wolf恢复巡逻状态;
-            Destroy(this.gameObject);
+            isDead = true;
+            anim.SetTrigger("die");
+
+            Invoke("DestroySelf", 3f);
+        }
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public override void StartWalk()
+    {
+        anim.SetTrigger("run");
+    }
+
+    public override void EndWalk()
+    {
+        anim.SetTrigger("idle");
+    }
+
+    public void ControlRotation(Vector2Int walkDir)
+    {
+        if(walkDir==new Vector2Int(-1,0))
+        {
+            transform.eulerAngles = new Vector3(0,- 90f, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(1, 0))
+        {
+            transform.eulerAngles = new Vector3(0, 90f, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(0, 1))
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(0, -1))
+        {
+            transform.eulerAngles = new Vector3(0, 180f, 0);
+            return;
         }
     }
 }

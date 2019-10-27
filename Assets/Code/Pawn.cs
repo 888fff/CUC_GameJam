@@ -118,7 +118,7 @@ public class Pawn : MonoBehaviour
     }
     public Pawn DetectionOtherPawn(Vector2Int dir, ref Vector2Int destGridPos,ref Vector2Int moveDir)
     {
-        Pawn retVal=null;
+        //Pawn retVal=null;
         var gp = GetGridPos();
         //search for dir line except self
         for (var i = 1; i<= SightLength;++i)
@@ -134,7 +134,7 @@ public class Pawn : MonoBehaviour
                     {
                         if(Board.PawnList[j].GetGridPos() == dp)
                         {
-                            Dog dog = Board.PawnList[j].transform.gameObject.GetComponent<Dog>();
+                            /*Dog dog = Board.PawnList[j].transform.gameObject.GetComponent<Dog>();
                             Sheep sheep= Board.PawnList[j].transform.gameObject.GetComponent<Sheep>();
                             if(dog!=null||sheep!=null)
                             {
@@ -142,10 +142,10 @@ public class Pawn : MonoBehaviour
                                 moveDir = dir;
                                 //return Board.PawnList[j];
                                 retVal = Board.PawnList[j];
-                            }
-                            //destGridPos.Set(dp.x,dp.y);
-                            //moveDir = dir;
-                            //return Board.PawnList[j];
+                            }*/
+                            destGridPos.Set(dp.x,dp.y);
+                            moveDir = dir;
+                            return Board.PawnList[j];
                         }
                     }
                 }
@@ -166,7 +166,7 @@ public class Pawn : MonoBehaviour
                     {
                         if (Board.PawnList[j].GetGridPos() == dp)
                         {
-                            Dog dog = Board.PawnList[j].transform.gameObject.GetComponent<Dog>();
+                            /*Dog dog = Board.PawnList[j].transform.gameObject.GetComponent<Dog>();
                             Sheep sheep = Board.PawnList[j].transform.gameObject.GetComponent<Sheep>();
                             if (dog != null || sheep != null)
                             {
@@ -174,10 +174,10 @@ public class Pawn : MonoBehaviour
                                 moveDir = cdir;
                                 //return Board.PawnList[j];
                                 retVal = Board.PawnList[j];
-                            }
-                            //destGridPos.Set(dp.x, dp.y);
-                            //moveDir = cdir * -1;
-                            //return Board.PawnList[j];
+                            }*/
+                            destGridPos.Set(dp.x, dp.y);
+                            moveDir = cdir * -1;
+                            return Board.PawnList[j];
                         }
                     }
                 }
@@ -196,25 +196,25 @@ public class Pawn : MonoBehaviour
                     {
                         if (Board.PawnList[j].GetGridPos() == dp)
                         {
-                            Dog dog = Board.PawnList[j].transform.gameObject.GetComponent<Dog>();
+                            /*Dog dog = Board.PawnList[j].transform.gameObject.GetComponent<Dog>();
                             Sheep sheep = Board.PawnList[j].transform.gameObject.GetComponent<Sheep>();
                             if (dog != null || sheep != null)
                             {
                                 //destGridPos.Set(dp.x,dp.y);
                                 moveDir = cdir;
                                 //return Board.PawnList[j];
-                                retVal = Board.PawnList[j];
-                            }
-                            //destGridPos.Set(dp.x, dp.y);
-                            //moveDir = cdir;
-                            //return Board.PawnList[j];
+                                //retVal = Board.PawnList[j];
+                            }*/
+                            destGridPos.Set(dp.x, dp.y);
+                            moveDir = cdir;
+                            return Board.PawnList[j];
                         }
                     }
                 }
             }
         }
-        return retVal;
-        //return null;
+        //return retVal;
+        return null;
     }
 
     public Pawn DetectFood(Vector2Int dir, ref Vector2Int destGridPos,ref Vector2Int moveDir)

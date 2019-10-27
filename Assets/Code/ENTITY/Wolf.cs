@@ -11,6 +11,8 @@ public class Wolf : Pawn
     public Vector2Int destination;
     public Vector2Int curPosition;
 
+    public Animator anim;
+    public bool isDead;
     void Start()
     {
         //初始化位置;
@@ -19,6 +21,9 @@ public class Wolf : Pawn
         //SetToGrid(curPosition);
 
         state = WolfState.patrol;
+
+        anim = GetComponent<Animator>();
+        isDead = false;
     }
 
     void Update()
@@ -27,6 +32,13 @@ public class Wolf : Pawn
         {
             state = WolfState.afraid;
         }*/
+
+        if (isDead)
+        {
+            anim.SetTrigger("die");
+        }
+
+        ControlRotation(WalkDir);
 
         MoveControl();
     }
@@ -184,12 +196,12 @@ public class Wolf : Pawn
                     targetPos = curPosition + targetDir;
 
 
-                    /*if (Board.BoardData[mapIndex] == 1)
+                    if (Board.BoardData[mapIndex] == 1)
                     {
                         //当反向一格是障碍物时
                         targetPos = curPosition;
                         targetDir = Vector2Int.zero;
-                    }*/
+                    }
                 }
 
                 WalkStep(targetDir);
@@ -209,6 +221,38 @@ public class Wolf : Pawn
                     afraidInit = false;
                 }
             }
+        }
+    }
+
+    public override void StartWalk()
+    {
+        anim.SetTrigger("run");
+    }
+
+    public void ControlRotation(Vector2Int walkDir)
+    {
+        if (walkDir == new Vector2Int(-1, 0))
+        {
+            transform.eulerAngles = new Vector3(0, -90f, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(1, 0))
+        {
+            transform.eulerAngles = new Vector3(0, 90f, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(0, 1))
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(0, -1))
+        {
+            transform.eulerAngles = new Vector3(0, 180f, 0);
+            return;
         }
     }
 }

@@ -10,6 +10,8 @@ public class Sheep : Pawn
     public float randomWalkTimeRate;
     public float t;
 
+    public Animator anim;
+    public bool isDead;
     private void Start()
     {
         state = SheepState.idle;
@@ -18,10 +20,14 @@ public class Sheep : Pawn
         randomWalkRate = 20;
         WalkDir = new Vector2Int(1, 0);
         randomWalkTimeRate = 2.5f;
+
+        anim = GetComponent<Animator>();
+        isDead = false;
     }
 
     private void Update()
     {
+        ControlRotation(WalkDir);
         MoveControl();
     }
 
@@ -137,7 +143,53 @@ public class Sheep : Pawn
         if (wolf!= null)
         {
             wolf.state = WolfState.attack;//当攻击动画播放完毕,Wolf恢复巡逻状态;
-            Destroy(this.gameObject);
+            isDead = true;
+            anim.SetTrigger("die");
+
+            Invoke("DestroySelf", 3f);
+            //Destroy(this.gameObject);
+        }
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public override void StartWalk()
+    {
+        anim.SetTrigger("run");
+    }
+
+    public override void EndWalk()
+    {
+        anim.SetTrigger("idle");
+    }
+
+    public void ControlRotation(Vector2Int walkDir)
+    {
+        if (walkDir == new Vector2Int(-1, 0))
+        {
+            transform.eulerAngles = new Vector3(0, -90f, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(1, 0))
+        {
+            transform.eulerAngles = new Vector3(0, 90f, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(0, 1))
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            return;
+        }
+
+        if (walkDir == new Vector2Int(0, -1))
+        {
+            transform.eulerAngles = new Vector3(0, 180f, 0);
+            return;
         }
     }
 }
