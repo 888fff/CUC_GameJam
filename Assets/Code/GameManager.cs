@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -108,16 +109,15 @@ public class GameManager : MonoBehaviour
         if (scene.name == "MenuScene" && scene.isLoaded)
         {
             var objs = scene.GetRootGameObjects();
-            /*
+            
             foreach (var obj in objs)
             {
                 if (obj.name == "Canvas")
                 {
-                   obj.transform.Find("START").GetComponent<Button>().onClick.AddListener(StartGame);
+                   obj.transform.Find("ANYKEY").transform.DOShakePosition(20, new Vector3(10, 10, 0));
                 }
-            }*/
-
-             SetState(MENU_STATE);
+            }
+            SetState(MENU_STATE);
 
         }
     }

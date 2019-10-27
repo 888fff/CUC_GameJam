@@ -108,7 +108,7 @@ public class Chessboard : MonoBehaviour
     public Vector2Int WorldToGrid(Vector3 wp)
     {
         wp = wp - BasePole.position;
-        var gp = new Vector2Int(Mathf.CeilToInt(wp.x / GridSize), Mathf.CeilToInt(wp.z / GridSize));
+        var gp = new Vector2Int(Mathf.RoundToInt(wp.x / GridSize), Mathf.RoundToInt(wp.z / GridSize));
         return gp;
     }
     //-------------------------------
