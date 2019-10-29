@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
     public Image Grass_Img;
     public Image Fruit_Img;
     public Image Bark_Img;
-
+    //
+    public AudioSource source;
 
     //
     public bool LockController;
@@ -50,6 +51,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SceneManager.sceneLoaded += OnLoadedGame;
+        source = GetComponent<AudioSource>();
+        source.Play();
     }
     /// ----------------
     public void StartMenu()
